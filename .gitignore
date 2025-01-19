@@ -1,4 +1,5 @@
-/.venv
+/.conda
 /server
+/client/__pycache__
 /우주선 체력.png.png
 /우주선 체력2.png.png

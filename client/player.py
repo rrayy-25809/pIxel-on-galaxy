@@ -4,7 +4,7 @@ import time
 class Player:
     def __init__(self, x,y):
         # 문제: 이미지를 로드하고 크기를 조정해야 하지만, 현재 코드에서는 두 번 크기를 변경하고 있습니다.
-        player_image = pygame.image.load("client/player.png")
+        player_image = pygame.image.load("player.png")
         self.image = pygame.transform.scale(player_image, (int(player_image.get_height())*2+5, int(player_image.get_height())*2+5))
         
         # 문제: Rect를 생성하고 즉시 다른 Rect로 대체합니다.

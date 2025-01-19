@@ -10,26 +10,26 @@ SCREEN_HEIGHT = 600
 # 색상 정의
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-BLACK = (0,0,0)
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-def __init__(mainscreen):
-    global screen , SCREEN_WIDTH , SCREEN_HEIGHT
-    if not (mainscreen is None):
-        screen = mainscreen
+BLACK = (0, 0, 0)
 
 # 게임 초기화
 pygame.init()
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 score = 0
 life = 3
+
+# 폰트 객체 생성
+font = pygame.font.SysFont("DungGeunMo.ttf", 36)
 
 # 플레이어 객체 생성
 player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 165)
 
 # 물체 객체 리스트 생성
 objects = []
+
+# HP 이미지 로드
+hp_images = [pygame.image.load('HP_1.png'), pygame.image.load('HP_2.png')]
 
 # 게임 루프
 while True:
@@ -43,11 +43,12 @@ while True:
         player.move_left()
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
         player.move_right()
+
     # 플레이어가 화면 아래로 벗어났을 경우
     if player.rect.x > SCREEN_WIDTH:
         player.rect.x = 1
     if player.rect.x < -1:
-        player.rect.x = SCREEN_WIDTH-1
+        player.rect.x = SCREEN_WIDTH - 1
 
     if len(objects) < 5:
         if pygame.time.get_ticks() % 30 == 0:
@@ -81,9 +82,15 @@ while True:
         obj.draw(screen)
 
     # 점수 표시
-    font = pygame.font.SysFont("DungGeunMo.ttf", 36)
     score_text = font.render("Score: " + str(score), True, RED)
     screen.blit(score_text, (10, 10))
+
+    # HP 이미지 그리기
+    for i in range(3):
+        if i < life:
+            screen.blit(hp_images[0], (10 + i * 40, 50))
+        else:
+            screen.blit(hp_images[1], (10 + i * 40, 50))
 
     # 화면 업데이트
     pygame.display.flip()
